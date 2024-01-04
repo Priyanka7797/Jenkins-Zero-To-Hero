@@ -23,19 +23,20 @@ A: This can be done in multiple ways,
    To briefly explain about the different options,
    ```
      - Poll SCM: Jenkins can periodically check the repository for changes and automatically build if changes are detected. 
-                 This can be configured in the "Build Triggers" section of a job.
+                 This can be configured in the "Build Triggers" section of a job. - execute at specific cron time we provided
                  
      - Build Triggers: Jenkins can be configured to use the Git plugin, which allows you to specify a Git repository and branch to build. 
-                 The plugin can be configured to automatically build when changes are pushed to the repository.
+                 The plugin can be configured to automatically build when changes are pushed to the repository. - costly process
                  
      - Webhooks: A webhook can be created in GitHub to notify Jenkins when changes are pushed to the repository. 
                  Jenkins can then automatically build the updated code. This can be set up in the "Build Triggers" section of a job and in the GitHub repository settings.
+        When dev makes a code change, github will send a payload which is json format of information contains who is code commiter, what is the pull request number he created, who is the assignee, who has to verify this.
    ```
 Q: How to backup Jenkins ?
 
 A: Backing up Jenkins is a very easy process, there are multiple default and configured files and folders in Jenkins that you might want to backup.
 ```  
-  - Configuration: The `~/.jenkins` folder. You can use a tool like rsync to backup the entire directory to another location.
+  - Configuration: The `~/.jenkins` folder. You can use a tool like rsync(shell command) to backup the entire directory to another location.(backup to ebs/volumes/shapshots....)
   
     - Plugins: Backup the plugins installed in Jenkins by copying the plugins directory located in JENKINS_HOME/plugins to another location.
     
@@ -56,7 +57,7 @@ A: Again, there are multiple ways to achieve this,
    
    - Environment Variables: Secrets can be stored as environment variables in Jenkins and referenced in build scripts. However, this method is less secure because environment variables are visible in the build logs.
    
-   - Hashicorp Vault: Jenkins can be integrated with Hashicorp Vault, which is a secure secrets management tool. Vault can be used to store and manage sensitive information, and Jenkins can retrieve the secrets as needed for builds.
+   - Hashicorp Vault: Jenkins can be integrated with Hashicorp Vault, which is a secure secrets management tool. Vault can be used to store and manage sensitive information, and Jenkins can retrieve the secrets as needed for builds.(most widely used tool)(when we want to use sensitive information used in pipeline, then we can invoke from here)
    
    - Third-party Secret Management Tools: Jenkins can also be integrated with third-party secret management tools such as AWS Secrets Manager, Google Cloud Key Management Service, and Azure Key Vault.
 ```
@@ -126,7 +127,7 @@ A: Using the CLI,
    1. Click on the "Manage Jenkins" link in the left-side menu.
    2. Click on the "Manage Plugins" link.
 
-Q: What is JNLP and why is it used in Jenkins ?
+Q: What is JNLP and why is it used in Jenkins ?(mechanism of how nodes and master talk each other)
 
 A: In Jenkins, JNLP is used to allow agents (also known as "slave nodes") to be launched and managed remotely by the Jenkins master instance. This allows Jenkins to distribute build tasks to multiple agents, providing scalability and improving performance.
 
